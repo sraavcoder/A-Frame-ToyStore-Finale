@@ -3,7 +3,7 @@ button {
   }
   
 #button-div {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: space-around;
     position: fixed;
@@ -11,6 +11,11 @@ button {
     width:100%;
     z-index: 1;
     border: 2px soild black;
+}
+
+.swal-icon img{
+  width:80px;
+  height:80px;
 }
   
   
