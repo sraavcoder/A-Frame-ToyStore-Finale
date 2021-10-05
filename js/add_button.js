@@ -11,7 +11,7 @@ AFRAME.registerComponent("create-buttons",{
         button2.setAttribute("class", "btn btn-danger ml-3");
 
         var buttonDiv = document.getElementById("button-div")
-        buttonDiv.appendChild(button1);
         buttonDiv.appendChild(button2);
+        buttonDiv.appendChild(button1);
     }
 })

@@ -12,9 +12,9 @@ AFRAME.registerComponent("markerhandler",{
     handleMarkerFound: function(){
         var buttondiv = document.getElementById("button-div");
         buttondiv.style.display = "flex"
-        var ratingButton = document.getElementById("order-button");
-        var orderButton = document.getElementById("order-summary-button");
-        ratingButton.addEventListener("click",function(){
+        var summaryButton = document.getElementById("order-summary-button");
+        var orderButton = document.getElementById("order-button");
+        summaryButton.addEventListener("click",function(){
             swal({
                 icon:"warning",
                 title:"Order Summary",

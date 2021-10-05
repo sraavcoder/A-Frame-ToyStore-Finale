@@ -5,66 +5,55 @@
   <title>Menu Card</title>
   <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
+  <!-- Adding Libraries-->
   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
   <script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script>
-  <script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-  <script src="./add_button.js"></script>
-  <script src="./markerhandler.js"></script>
-
+  <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+
+  <!-- Initializing database -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyChaTEyAwG1zzCb1qclIKA851zM-Q0EmNY",
+      authDomain: "a-frame-toy-shop.firebaseapp.com",
+      projectId: "a-frame-toy-shop",
+      storageBucket: "a-frame-toy-shop.appspot.com",
+      messagingSenderId: "124030644782",
+      appId: "1:124030644782:web:fc648858bc2549fdd265bf"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <!-- Adding other files -->
+  <script src="./js/add_button.js"></script>
+  <script src="./js/markerhandler.js"></script>
+  <script src="./js/add_markers.js"></script>
   <link href="./style.css" rel="stylesheet" />
 
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
 
-  <a-scene 
-    embedded vr-mode-ui="enabled: false"     
-    arjs="sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960;debugUIEnabled: false;"
-    gesture-detector create-buttons>
-
+  <a-scene id="main-scene" vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; 
+      sourceWidth:1280; sourceHeight:960; 
+      displayWidth: 1280; displayHeight: 960; 
+      debugUIEnabled: false;" gesture-detector create-markers create-buttons>
     <a-entity camera></a-entity>
-
-    <a-assets>
-      <a-asset-item id="crane-model" src="./assets/models/crane/scene.gltf"></a-asset-item>
-    </a-assets>
-
-    <a-marker id="toyst-marker" type="pattern" url="./assets/dish-markers/toySt.patt" cursor="rayOrigin:mouse" markerhandler>
-      <a-entity id="crane" gltf-model="#crane-model" position="-2 0 0" scale="0.05 0.05 0.05" gesture-handler></a-entity>
-      
-      <a-plane position="0 0 0" width="1.5" height="1.5" rotation="-90 0 0" color="#FDFF98">
-        <a-plane position="0 0.89 0.02" width="1.49" height="0.3" rotation="0 0 0" color="#DC3546">
-          <a-entity position="0 0 0.1" rotation="0 0 0"
-            text="font:monoid;value:HYDRAULIC CRANE;color:black;width: 2.4;height:1;align:center;"></a-entity>
-        </a-plane>
-
-        <a-entity position="0 0 0.1" rotation="0 0 0"
-          text="color: brown; align: center; width: 1.5; height: 1; font: monoid;
-               value: PULL BACK AND GO: Friction powered 
-                      crane truck toy, 260-degree rotation
-                      left and right, machine can pull up 
-                      & down, swing left and right. High 
-                      Quality Material: FunBlast crane 
-                      toy is made of 100% high-quality 
-                      abs plastics and metal shovel 
-                      which is durable, light and Non
-                      -Toxic with strong crach resistance
-                      
-                      
-                      
-                      AGE: 8-10yrs">
-        </a-entity>
-      </a-plane>
-    </a-marker>
     
   </a-scene>
-  <div id="button-div"></div>
+  <div id="button-div" class="fixed-button"></div>
  
 </body>
 
