@@ -46,14 +46,20 @@
 
 <body style="margin : 0px; overflow: hidden;">
 
-  <a-scene id="main-scene" vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; 
-      sourceWidth:1280; sourceHeight:960; 
-      displayWidth: 1280; displayHeight: 960; 
-      debugUIEnabled: false;" gesture-detector create-markers create-buttons>
+  <a-scene id="main-scene" 
+           vr-mode-ui="enabled: false" 
+           embedded 
+           arjs="sourceType: webcam; 
+           sourceWidth:1280; sourceHeight:960; 
+           displayWidth: 1280; displayHeight: 960; 
+           debugUIEnabled: false;"
+           gesture-detector
+           create-markers 
+           create-buttons>
     <a-entity camera></a-entity>
     
   </a-scene>
-  <div id="button-div" class="fixed-button"></div>
+  <div id="button-div"></div>
  
 </body>
 

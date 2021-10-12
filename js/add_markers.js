@@ -14,7 +14,7 @@ AFRAME.registerComponent("create-markers", {
             marker.setAttribute("markerhandler", {});
             mainScene.appendChild(marker);
 
-            if(toy.is_out_of_stock == true){
+            if(toy.is_out_of_stock !== true){
               // model
               var model = document.createElement("a-entity");         
               model.setAttribute("id", `model-${toy.id}`);
@@ -116,7 +116,6 @@ AFRAME.registerComponent("create-markers", {
               pricePlane.setAttribute("height",0.8);
               pricePlane.setAttribute("position",{x:-1.3,y:0,z:0.3});
               pricePlane.setAttribute("rotation",{x:-90,y:0,z:0});
-              pricePlane.setAttribute("visible", false);
 
               // Price of the toy
               var price = document.createElement("a-entity");
