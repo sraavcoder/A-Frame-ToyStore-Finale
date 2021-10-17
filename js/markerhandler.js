@@ -31,6 +31,7 @@ AFRAME.registerComponent("markerhandler",{
           userId = inputValue;
         })
     },
+
     handleMarkerFound: function(toys, markerId){
         var tempToy = toys.filter(toy => toy.id === markerId);
         var toy = tempToy[0]
@@ -49,11 +50,16 @@ AFRAME.registerComponent("markerhandler",{
             var mainPlane = document.querySelector(`#main-plane-${toy.id}`);
             mainPlane.setAttribute("visible", true);
 
+            var pricePlane = document.querySelector(`#price-plane-${toy.id}`);
+            pricePlane.setAttribute("visible", true);
+
             // Changing button div visibility
             var buttonDiv = document.getElementById("button-div");
             buttonDiv.style.display = "flex"; 
+            
             var summaryButton = document.getElementById("order-summary-button");
             var orderButtton = document.getElementById("order-button");
+            var payButton = document.getElementById("pay-button")
 
             orderButtton.addEventListener("click", () => {
               var uID;
@@ -68,15 +74,113 @@ AFRAME.registerComponent("markerhandler",{
               });
             });
 
-            summaryButton.addEventListener("click", function () {
-              swal({
-                icon: "warning",
-                title: "Order Summary",
-                text: "Work In Progress"
-              });
+            summaryButton.addEventListener("click", () => {
+              // console.log("Handle Order Summary")
+              this.handleOrderSummary();
             });
+
+            payButton.addEventListener("click", () => {
+              this.handlePayement();
+            })
         }
     },
+
+    handlePayement: function () {
+        document.getElementById("modal-div").style.display = "none";
+        var uID;
+        userId <=9 ? (uID = `U0${userId}`) : (uID = `U${userId}`);
+
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(uID)
+          .update({
+            current_orders: {},
+            total_bill: 0
+          })
+          .then(() => {
+            swal({
+              icon: "success",
+              title: "Thanks For Paying !",
+              text: "We Hope You Liked Your Toy !!",
+              timer: 3500,
+              buttons: false
+            });
+          });
+    },
+
+    getOrderSummary: async function (uID) {
+      return await firebase
+      .firestore()
+      .collection("users")
+      .doc(uID)
+      .get().then(doc => doc.data());
+    },
+
+    handleOrderSummary: async function(){
+      var uID;
+        userId <=9 ? (uID = `U0${userId}`) : (uID = `U${userId}`);
+
+      var orderSummary = await this.getOrderSummary(uID);
+
+      var modalDiv = document.getElementById("modal-div");
+      modalDiv.style.display = "flex";
+      var tableBodyTag = document.getElementById("bill-table-body");
+      tableBodyTag.innerHTML = "";
+
+      var currentOrders = Object.keys(orderSummary.current_orders);
+
+      currentOrders.map(i => {
+        var tr = document.createElement("tr");
+        var item = document.createElement("td");
+        var price = document.createElement("td");
+        var quantity = document.createElement("td");
+        var subtotal = document.createElement("td");
+      
+        item.innerHTML = orderSummary.current_orders[i].item;
+        price.innerHTML = "₹" + orderSummary.current_orders[i].price;
+        price.setAttribute("class", "text-center");
+      
+        quantity.innerHTML = orderSummary.current_orders[i].quantity;
+        quantity.setAttribute("class", "text-center");
+      
+        subtotal.innerHTML = "₹" + orderSummary.current_orders[i].subtotal;
+        subtotal.setAttribute("class", "text-center");
+      
+        tr.appendChild(item);
+        tr.appendChild(price);
+        tr.appendChild(quantity);
+        tr.appendChild(subtotal);
+        tableBodyTag.appendChild(tr);
+      });
+    
+      var totalTr = document.createElement("tr");
+    
+      var td1 = document.createElement("td");
+      td1.setAttribute("class", "no-line");
+    
+      var td2 = document.createElement("td");
+      td1.setAttribute("class", "no-line");
+    
+      var td3 = document.createElement("td");
+      td1.setAttribute("class", "no-line text-cente");
+    
+      var strongTag = document.createElement("strong");
+      strongTag.innerHTML = "Total";
+      td3.appendChild(strongTag);
+    
+      var td4 = document.createElement("td");
+      td1.setAttribute("class", "no-line text-right");
+      td4.innerHTML = "₹" + orderSummary.total_bill;
+    
+      totalTr.appendChild(td1);
+      totalTr.appendChild(td2);
+      totalTr.appendChild(td3);
+      totalTr.appendChild(td4);
+    
+      tableBodyTag.appendChild(totalTr);
+    },
+
     handleMarkerLost: function(){
         var buttondiv = document.getElementById("button-div");
         buttondiv.style.display = "none"
