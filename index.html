@@ -48,6 +48,7 @@
   <script src="./js/add_button.js"></script>
   <script src="./js/markerhandler.js"></script>
   <script src="./js/add_markers.js"></script>
+  <script src="./js/stars.js"></script>
   <link href="./style.css" rel="stylesheet" />
 
 </head>
@@ -101,6 +102,38 @@
           <div class="modal-footer">
             <button id="pay-button" type="button" class="btn btn-primary">
               Pay Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Boilerplate for Ratings Modal -->
+  <div class="container">
+    <div id="rating-modal-div" class="rating-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Rate Dish</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeRatingModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="table-responsive">
+              <!--Text Field Input-->
+              <textarea class="form-control" id="feedback-input" rows="3"></textarea>
+              <!--Stars Input-->
+              <input id="rating-input" name="rating-input" class="rating rating-loading" data-min="0" data-max="5"
+                data-step="0.1" value="0" />
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <!--Submit Button-->
+            <button id="save-rating-button" type="button" class="btn btn-primary">
+              Submit
             </button>
           </div>
         </div>

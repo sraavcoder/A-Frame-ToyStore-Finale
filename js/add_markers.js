@@ -132,6 +132,66 @@ AFRAME.registerComponent("create-markers", {
               });
               pricePlane.appendChild(price);
               marker.appendChild(pricePlane);
+
+              // Toy Rating plane
+              var ratingPlane = document.createElement("a-entity");
+              ratingPlane.setAttribute("id", `rating-plane-${toy.id}`);
+              ratingPlane.setAttribute("position", { x: 2, y: 0, z: 0.5 });
+              ratingPlane.setAttribute("geometry", {
+                primitive: "plane",
+                width: 1.5,
+                height: 0.3
+              });
+              ratingPlane.setAttribute("material", {
+                color: "#DC3546"
+              });
+              ratingPlane.setAttribute("rotation", { x: -90, y: 0, z: 0 });
+              ratingPlane.setAttribute("visible", false);
+
+              // Ratings
+              var rating = document.createElement("a-entity");
+              rating.setAttribute("id", `rating-${toy.id}`);
+              rating.setAttribute("position", { x: 0, y: 0.05, z: 0.1 });
+              rating.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+              rating.setAttribute("text", {
+                font: "mozillavr",
+                color: "black",
+                width: 2.4,
+                align: "center",
+                value: `Customer Rating: ${toy.last_rating}`
+              });
+              ratingPlane.appendChild(rating);
+              marker.appendChild(ratingPlane);
+
+              // Toy review plane
+              var reviewPlane = document.createElement("a-entity");
+              reviewPlane.setAttribute("id", `review-plane-${toy.id}`);
+              reviewPlane.setAttribute("position", { x: 2, y: 0, z: 0 });
+              reviewPlane.setAttribute("geometry", {
+                primitive: "plane",
+                width: 1.5,
+                height: 0.5
+              });
+              reviewPlane.setAttribute("material", {
+                color: "#DC3546"
+              });
+              reviewPlane.setAttribute("rotation", { x: -90, y: 0, z: 0 });
+              reviewPlane.setAttribute("visible", false);
+
+              // Toy review
+              var review = document.createElement("a-entity");
+              review.setAttribute("id", `review-${toy.id}`);
+              review.setAttribute("position", { x: 0, y: 0.05, z: 0.1 });
+              review.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+              review.setAttribute("text", {
+                font: "mozillavr",
+                color: "black",
+                width: 2.4,
+                align: "center",
+                value: `Customer Review: \n${toy.last_review}`
+              });
+              reviewPlane.appendChild(review);
+              marker.appendChild(reviewPlane);
             }
         })
     },

@@ -53,13 +53,22 @@ AFRAME.registerComponent("markerhandler",{
             var pricePlane = document.querySelector(`#price-plane-${toy.id}`);
             pricePlane.setAttribute("visible", true);
 
+            var ratingPlane = document.querySelector(`#rating-plane-${toy.id}`);
+            ratingPlane.setAttribute("visible", true);
+
+            var reviewPlane = document.querySelector(`#review-plane-${toy.id}`);
+            reviewPlane.setAttribute("visible", true);
+
             // Changing button div visibility
             var buttonDiv = document.getElementById("button-div");
             buttonDiv.style.display = "flex"; 
             
             var summaryButton = document.getElementById("order-summary-button");
             var orderButtton = document.getElementById("order-button");
-            var payButton = document.getElementById("pay-button")
+            var payButton = document.getElementById("pay-button");
+            var ratingButton = document.getElementById("rating-button");
+
+            ratingButton.addEventListener("click", () => this.handleRatings(toy));
 
             orderButtton.addEventListener("click", () => {
               var uID;
@@ -83,6 +92,51 @@ AFRAME.registerComponent("markerhandler",{
               this.handlePayement();
             })
         }
+    },
+
+    handleRatings: async function (toy) {
+      var uID;
+      userId <=9 ? (uID = `U0${userId}`) : (uID = `U${userId}`);
+
+      var orderSummary = await this.getOrderSummary(uID);
+      var currentOrders = Object.keys(orderSummary.current_orders);    
+  
+      if (currentOrders.length > 0 && currentOrders==toy.id) {
+        document.getElementById("rating-modal-div").style.display = "flex";
+        document.getElementById("rating-input").value = "0";
+        document.getElementById("feedback-input").value = "";
+  
+        var saveRatingButton = document.getElementById("save-rating-button");
+        saveRatingButton.addEventListener("click",()=>{
+          document.getElementById("rating-modal-div").style.display = "none";
+          var rating = document.getElementById("rating-input").value;
+          var feedback = document.getElementById("feedback-input").value;
+          
+          firebase.firestore().collection("toys").doc(toy.id).update({
+            last_review: feedback,
+            last_rating: rating
+          }).then(()=>{
+            swal({
+              icon: "success",
+              title: "Thanks for rating",
+              text: "We hope you enjoy your toy",
+              timer: 3500,
+              button:false
+            })
+          })
+          
+        })
+      }
+      else{
+        swal({
+          icon: "warning",
+          title: "Oops",
+          text: "No toy found to give rating",
+          timer: 3500,
+          button:false
+        })
+        
+      }
     },
 
     handlePayement: function () {
